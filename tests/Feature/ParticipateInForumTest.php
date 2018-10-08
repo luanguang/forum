@@ -8,15 +8,15 @@ class ParticipateInForumTest extends TestCase
 {
     public function unauthenticated_user_may_no_add_replies()
     {
-        $this->expectedException('Illuminate\Auth\AuthenticationException');
-
-        $this->post('thread/1/replies', []);
+        $this->withExceptionHandling()
+            ->post('thread/some_channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     public function test_an_authenticated_user_may_participate_in_forum_threads()
     {
         // Given we have a authenticated user
-        $this->be($user = factory('App\Model\User')->create());
+        $this->signIn();
         // And an existing thread
         $thread = create('App\Model\Thread');
         // When the user adds a reply to the thread
