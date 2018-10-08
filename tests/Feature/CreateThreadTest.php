@@ -6,11 +6,11 @@ use Tests\TestCase;
 
 class CreateThreadTest extends TestCase
 {
-    public function guests_may_not_create_threads()
+    public function test_guests_may_not_create_threads()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException'); // 在此处抛出异常即代表测试通过
 
-        $thread = make('App\Thread');
+        $thread = make('App\Model\Thread');
         $this->post('/threads', $thread->toArray());
     }
 
@@ -23,5 +23,10 @@ class CreateThreadTest extends TestCase
         $this->post('/threads', $thread->toArray());
 
         $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
+    }
+
+    public function test_guests_may_not_see_the_create_thread_page()
+    {
+        $this->withExceptionHandling()->get('/threads/create')->assertRedirect('/login');
     }
 }
