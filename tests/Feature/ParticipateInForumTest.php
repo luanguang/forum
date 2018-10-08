@@ -25,4 +25,15 @@ class ParticipateInForumTest extends TestCase
         // Then their reply should be visible on the page
         $this->get($thread->path())->assertSee($reply->body);
     }
+
+    public function test_a_reply_requires_a_body()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = create('App\Model\Thread');
+        $reply = make('App\Model\Reply', ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
+    }
 }

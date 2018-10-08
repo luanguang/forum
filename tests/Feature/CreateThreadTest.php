@@ -21,10 +21,42 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Model\Thread');
+        $thread = make('App\Model\Thread');
 
-        $this->post('/threads', $thread->toArray());
+        $response = $this->post('/threads', $thread->toArray());
 
-        $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
+        $this->get($response->headers->get('Location'))->assertSee($thread->title)->assertSee($thread->body);
+    }
+
+    public function test_a_thread_requires_a_title()
+    {
+        $this->publishThread(['title' => null])
+            ->assertSessionHasErrors('title');
+    }
+
+    public function test_a_thread_requires_a_body()
+    {
+        $this->publishThread(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+    public function test_a_thread_requires_a_valid_channel()
+    {
+        factory('App\Model\Channel', 2)->create();
+
+        $this->publishThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->publishThread(['channel_id' => 999])  // channle_id 为 999，是一个不存在的 Channel
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    public function publishThread($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = make('App\Model\Thread', $overrides);
+
+        return $this->post('/threads', $thread->toArray());
     }
 }
