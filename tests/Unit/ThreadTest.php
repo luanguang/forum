@@ -10,7 +10,7 @@ class ThreadTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = create('App\Model\Thread');
+        $this->thread = create('Thread');
     }
 
     public function test_a_thread_has_replies()
@@ -35,14 +35,14 @@ class ThreadTest extends TestCase
 
     public function test_a_thread_belongs_to_a_channel()
     {
-        $thread = create('App\Model\Thread');
+        $thread = create('Thread');
 
         $this->assertInstanceOf('App\Model\Channel', $thread->channel);
     }
 
     public function test_a_thread_can_make_a_string_path()
     {
-        $thread = create('App\Model\Thread');
+        $thread = create('Thread');
 
         $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
     }

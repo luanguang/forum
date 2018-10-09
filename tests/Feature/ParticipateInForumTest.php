@@ -18,9 +18,9 @@ class ParticipateInForumTest extends TestCase
         // Given we have a authenticated user
         $this->signIn();
         // And an existing thread
-        $thread = create('App\Model\Thread');
+        $thread = create('Thread');
         // When the user adds a reply to the thread
-        $reply = make('App\Model\Reply');
+        $reply = make('Reply');
         $this->post($thread->path() . '/replies', $reply->toArray());
         // Then their reply should be visible on the page
         $this->get($thread->path())->assertSee($reply->body);
@@ -30,8 +30,8 @@ class ParticipateInForumTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $thread = create('App\Model\Thread');
-        $reply = make('App\Model\Reply', ['body' => null]);
+        $thread = create('Thread');
+        $reply = make('Reply', ['body' => null]);
 
         $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertSessionHasErrors('body');

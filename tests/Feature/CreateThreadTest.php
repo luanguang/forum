@@ -21,7 +21,7 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make('App\Model\Thread');
+        $thread = make('Thread');
 
         $response = $this->post('/threads', $thread->toArray());
 
@@ -55,7 +55,7 @@ class CreateThreadTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $thread = make('App\Model\Thread', $overrides);
+        $thread = make('Thread', $overrides);
 
         return $this->post('/threads', $thread->toArray());
     }
