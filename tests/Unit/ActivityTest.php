@@ -35,6 +35,29 @@ class ActivityTest extends TestCase
 
         $reply = create('Reply');
 
-        $this->assertEquals(13, Activity::count()); //数量随着测试的改变而改变
+        $this->assertEquals(14, Activity::count()); //数量随着测试的改变而改变
+    }
+
+    public function test_it_fetches_a_feed_for_any_user()
+    {
+        $this->signIn();
+
+        // Given we have a thread
+        create('Thread', ['user_id' => auth()->id()], 2);
+
+        // And another thread from a week ago
+        auth()->user()->activities()->first()->update(['created_at' => Carbon::now()->subWeek()]);
+
+        // When we fetch their feed
+        $feed = Activity::feed(auth()->user());
+
+        // Then,it should be returned in the proper format.
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->format('Y-m-d')
+        ));
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->subWeek()->format('Y-m-d')
+        ));
     }
 }

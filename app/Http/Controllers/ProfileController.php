@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\User;
+use App\Model\Activity;
 
 class ProfileController extends Controller
 {
@@ -11,14 +12,14 @@ class ProfileController extends Controller
         return view('profile.show', [
             'profileUser' => $user,
             // 'threads'     => $user->threads()->paginate(10),
-            'activities' => $this->getActivity($user),
+            'activities' => Activity::feed($user),
         ]);
     }
 
-    public function getActivity(User $user)
-    {
-        return $user->activities()->latest()->take(50)->with('subject')->get()->groupBy(function ($activity) {
-            return $activity->created_at->format('Y-m-d');
-        });
-    }
+    // public function getActivity(User $user)
+    // {
+    //     return $user->activities()->latest()->take(50)->with('subject')->get()->groupBy(function ($activity) {
+    //         return $activity->created_at->format('Y-m-d');
+    //     });
+    // }
 }

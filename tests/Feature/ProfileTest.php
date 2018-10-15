@@ -8,19 +8,19 @@ class ProfileTest extends TestCase
 {
     public function test_a_user_has_a_profile()
     {
-        $user = create('User');
+        $this->signIn();
 
-        $this->get('/profile/' . $user->name)
-            ->assertSee($user->name);
+        $this->get('/profile/' . auth()->user()->name)
+            ->assertSee(auth()->user()->name);
     }
 
     public function test_profiles_display_all_threads_created_by_the_associated_user()
     {
-        $user = create('User');
+        $this->signIn();
 
-        $thread = create('Thread', ['user_id' => $user->id]);
+        $thread = create('Thread', ['user_id' => auth()->id()]);
 
-        $this->get('/profile/' . $user->name)
+        $this->get('/profile/' . auth()->user()->name)
             ->assertSee($thread->title)
             ->assertSee($thread->body);
     }
