@@ -17,4 +17,9 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id');//可不填第二个参数，填写只是便于理解
+    }
 }

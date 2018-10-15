@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        //用户授权
         Gate::before(function ($user) {
             if ($user->name === 'admin') {
                 return true;
