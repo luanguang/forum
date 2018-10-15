@@ -52,11 +52,11 @@ class CreateThreadTest extends TestCase
     }
 
     /* assertDatabaseHas 和 assertDatabaseMissing方法不存在 */
-    public function test_a_thread_can_be_deleted()
+    public function test_authorized_users_can_delete_threads()
     {
         $this->signIn();
 
-        $thread = create('Thread');
+        $thread = create('Thread', ['user_id' => auth()->id()]);
         $reply = create('Reply', ['thread_id' => $thread->id]);
         // $this->assertDatabaseHas('threads', ['id' => $thread->id]);
         $response = $this->json('DELETE', $thread->path());
@@ -75,6 +75,18 @@ class CreateThreadTest extends TestCase
         $response = $this->delete($thread->path());
 
         $response->assertRedirect('/login');
+    }
+
+    public function test_unauthorized_users_may_not_delete_threads()
+    {
+        $this->withExceptionHandling();
+
+        $thread = create('Thread');
+
+        $this->delete($thread->path())->assertRedirect('/login');
+
+        $this->signIn();
+        $this->delete($thread->path())->assertStatus(403);
     }
 
     public function publishThread($overrides = [])

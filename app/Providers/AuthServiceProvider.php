@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Policies\ThreadPolicy;
+use App\Model\Thread;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        // 'App\Model\Thread' => 'App\Policies\ThreadPolicy',
+        Thread::class => ThreadPolicy::class,
     ];
 
     /**
@@ -25,6 +28,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function ($user) {
+            if ($user->name === 'admin') {
+                return true;
+            }
+        });
     }
 }
