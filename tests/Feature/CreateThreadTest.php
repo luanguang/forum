@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Model\Activity;
 
 class CreateThreadTest extends TestCase
 {
@@ -62,6 +63,22 @@ class CreateThreadTest extends TestCase
         $response = $this->json('DELETE', $thread->path());
 
         $response->assertStatus(204);
+
+        //assertDatabaseMissing不存在
+        // $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        // $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+        // $this->assertDatabaseMissing('activities', [
+        //     'subject_id'   => $thread->id,
+        //     'subject_type' => get_class($thread),
+        // ]);
+
+        // $this->assertDatabaseMissing('activities', [
+        //     'subject_id'   => $reply->id,
+        //     'subject_type' => get_class($reply)
+        // ]);
+
+        $this->assertEquals(0, Activity::count());
 
         // $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
     }
