@@ -78,7 +78,7 @@ class CreateThreadTest extends TestCase
         //     'subject_type' => get_class($reply)
         // ]);
 
-        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(1, Activity::count());
 
         // $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
     }
