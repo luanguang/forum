@@ -6,16 +6,17 @@
                     <a href="{{ route('profile', $reply->owner) }}">{{ $reply->owner->name }}</a>
                     回复于 {{ $reply->created_at->diffForHumans() }}
                 </h5>
-
-                <div>
-                    <favorite :reply="{{ $reply }}"></favorite>
-                    {{-- <form method="POST" action="/replies/{{ $reply->id }}/favorite">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                            {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites()->count()) }}
-                        </button>
-                    </form> --}}
-                </div>
+                @if(Auth::check())
+                    <div>
+                        <favorite :reply="{{ $reply }}"></favorite>
+                        {{-- <form method="POST" action="/replies/{{ $reply->id }}/favorite">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
+                                {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites()->count()) }}
+                            </button>
+                        </form> --}}
+                    </div>
+                @endif
             </div>
         </div>
 
