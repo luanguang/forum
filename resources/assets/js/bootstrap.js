@@ -52,6 +52,13 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 window.Vue = require('vue');
+
+Vue.prototype.authorize = function (hander) {
+    let user = window.Laravel.user;
+
+    return user ? hander(user) : false;
+};
+
 window.events = new Vue();
 
 
