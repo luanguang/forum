@@ -8,7 +8,7 @@
                     </a>said {{ data.created_at }}...
                 </h5>
 
-                <div v-if="signIn">
+                <div v-if="signedIn">
                     <favorite :reply="data"></favorite>
                 </div>
 
@@ -57,8 +57,8 @@
         },
 
         computed: {
-            signIn() {
-                return window.Laravel.signIn;
+            signedIn() {
+                return window.Laravel.signedIn;
             },
 
             canUpdate() {
