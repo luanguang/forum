@@ -23,7 +23,9 @@ class ParticipateInForumTest extends TestCase
         $reply = make('Reply');
         $this->post($thread->path() . '/replies', $reply->toArray());
         // Then their reply should be visible on the page
-        $this->get($thread->path())->assertSee($reply->body);
+        // $this->get($thread->path())->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
 
     public function test_a_reply_requires_a_body()
@@ -60,6 +62,7 @@ class ParticipateInForumTest extends TestCase
         $this->delete("/replies/{$reply->id}")->assertStatus(302);
 
         // $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     }
 
     public function test_unauthorized_users_cannot_update_replies()

@@ -48,7 +48,7 @@ class CreateThreadTest extends TestCase
         $this->publishThread(['channel_id' => null])
             ->assertSessionHasErrors('channel_id');
 
-        $this->publishThread(['channel_id' => 999])  // channle_id 为 999，是一个不存在的 Channel
+        $this->publishThread(['channel_id' => 9999])  // channle_id 为 999，是一个不存在的 Channel
             ->assertSessionHasErrors('channel_id');
     }
 

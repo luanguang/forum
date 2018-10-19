@@ -35,7 +35,7 @@ class ActivityTest extends TestCase
 
         $reply = create('Reply');
 
-        $this->assertEquals(14, Activity::count()); //数量随着测试的改变而改变
+        $this->assertEquals(18, Activity::count()); //数量随着测试的改变而改变
     }
 
     public function test_it_fetches_a_feed_for_any_user()
