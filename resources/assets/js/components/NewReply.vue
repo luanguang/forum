@@ -34,22 +34,12 @@
         },
 
         methods: {
-            // addReply() {
-            //     axios.post(this.endpoint, { body: this.body })
-            //     .then(({data}) => {
-            //         this.body = '';
-
-            //         flash('Your reply has been posted.');
-
-            //         this.$emit('created', data);
-            //     });
-            // }
             addReply() {
-                axios.post(this.endpoint, { body:this.body })
+                axios.post(location.pathname + '/replies', { body:this.body })
                     .then(({data}) => {
                        this.body = '';
 
-                       flash('Your reply has been posted.');
+                       flash('回复成功');
 
                        this.$emit('created', data);
                     });
