@@ -30,8 +30,11 @@ Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 Route::patch('/replies/{reply}', 'ReplyController@update');
 Route::delete('/replies/{reply}', 'ReplyController@destroy');
+
 Route::post('/replies/{reply}/favorite', 'FavoriteController@store');
 Route::delete('/replies/{reply}/favorite', 'FavoriteController@destroy');
+
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store')->middleware('auth');
 
 Auth::routes();
 
