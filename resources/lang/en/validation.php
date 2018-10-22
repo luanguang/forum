@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
@@ -87,6 +86,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'spamfree'             => 'The :attribute contains spam',
 
     /*
     |--------------------------------------------------------------------------
@@ -117,5 +117,4 @@ return [
     */
 
     'attributes' => [],
-
 ];
