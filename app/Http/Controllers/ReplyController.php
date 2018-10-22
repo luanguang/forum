@@ -21,11 +21,7 @@ class ReplyController extends Controller
 
     public function store($channel_id, Thread $thread, Spam $spam)
     {
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
-
-        $spam->detect(request('body'));
+        $this->validateReply();
 
         $reply = $thread->addReply([
             'body'    => request('body'),
@@ -39,9 +35,11 @@ class ReplyController extends Controller
         return back()->with('flash', 'Your reply has been left.');
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
+
+        $this->validateReply();
 
         $reply->update(request(['body']));
     }
@@ -57,5 +55,15 @@ class ReplyController extends Controller
         }
 
         return back();
+    }
+
+    public function validateReply()
+    {
+        $this->validate(request(), [
+            'body' => 'required'
+        ]);
+
+        //化为实例 new Spam 一个意思
+        resolve(Spam::class)->detect(request('body'));
     }
 }
