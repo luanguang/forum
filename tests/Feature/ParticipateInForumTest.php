@@ -91,8 +91,9 @@ class ParticipateInForumTest extends TestCase
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updateReply]);
     }
 
-    public function test_replies_contain_spam_may_not_be_created()
+    public function test_replies_that_contain_spam_may_not_be_created()
     {
+        $this->withExceptionHandling();
         $this->signIn();
 
         $thread = create('Thread');
@@ -100,11 +101,12 @@ class ParticipateInForumTest extends TestCase
             'body' => 'something forbidden'
         ]);
 
-        $this->post($thread->path() . '/replies', $reply->toArray())->assertStatus(422);
+        $this->json('post', $thread->path() . '/replies', $reply->toArray())->assertStatus(422);
     }
 
     public function test_users_may_only_reply_a_maximum_of_once_per_minute()
     {
+        $this->withExceptionHandling();
         $this->signIn();
 
         $thread = create('Thread');
@@ -112,8 +114,8 @@ class ParticipateInForumTest extends TestCase
             'body' => 'My simple reply.'
         ]);
 
-        $this->post($thread->path() . '/replies', $reply->toArray())->assertStatus(302);
+        $this->post($thread->path() . '/replies', $reply->toArray())->assertStatus(200);
 
-        $this->post($thread->path() . '/replies', $reply->toArray())->assertStatus(422);
+        $this->post($thread->path() . '/replies', $reply->toArray())->assertStatus(429);
     }
 }

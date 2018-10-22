@@ -7,6 +7,7 @@ use App\Model\Thread;
 use App\Model\Reply;
 use App\Inspections\Spam;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\CreatePostRequest;
 
 class ReplyController extends Controller
 {
@@ -20,30 +21,35 @@ class ReplyController extends Controller
         return $thread->replies()->paginate(20);
     }
 
-    public function store($channel_id, Thread $thread, Spam $spam)
+    public function store($channel_id, Thread $thread, CreatePostRequest $form)
     {
-        if (Gate::denies('create', Reply::class)) {
-            return response('You are posting too frequently.Please take a break.:)', 422);
-        }
+        // if (Gate::denies('create', Reply::class)) {
+        //     return response('You are posting too frequently.Please take a break.:)', 422);
+        // }
 
-        try {
-            // $this->validateReply();
-            // $this->authorize('create', Reply::class);
-            $this->validate(request(), ['body' => 'required|spamfree']);
+        // try {
+        //     // $this->validateReply();
+        //     // $this->authorize('create', Reply::class);
+        //     $this->validate(request(), ['body' => 'required|spamfree']);
 
-            $reply = $thread->addReply([
+        // $reply = $thread->addReply([
+        //     'body'    => request('body'),
+        //     'user_id' => auth()->id(),
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response('Sorry,your reply could not be saved at this time.', 422);
+        // }
+
+        // if (request()->expectsJson()) {
+        //     return $reply->load('owner');
+        // }
+
+        // return back()->with('flash', 'Your reply has been left.');
+
+        return $reply = $thread->addReply([
             'body'    => request('body'),
             'user_id' => auth()->id(),
-            ]);
-        } catch (\Exception $e) {
-            return response('Sorry,your reply could not be saved at this time.', 422);
-        }
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
-        }
-
-        return back()->with('flash', 'Your reply has been left.');
+        ])->load('owner');
     }
 
     public function update(Reply $reply, Spam $spam)
