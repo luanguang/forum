@@ -8,6 +8,8 @@ use App\Model\Reply;
 use App\Inspections\Spam;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CreatePostRequest;
+use App\Model\User;
+use App\Notifications\YouWereMentioned;
 
 class ReplyController extends Controller
 {
@@ -23,6 +25,25 @@ class ReplyController extends Controller
 
     public function store($channel_id, Thread $thread, CreatePostRequest $form)
     {
+        $reply = $thread->addReply([
+            'body'    => request('body'),
+            'user_id' => auth()->id(),
+        ]);
+
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matched);
+
+        $names = $matched[1];
+
+        foreach ($names as $name) {
+            $user = User::whereName($name)->first();
+
+            if ($user) {
+                $user->notify(new YouWereMentioned($reply));
+            }
+        }
+
+        return $reply->load('owner');
+
         // if (Gate::denies('create', Reply::class)) {
         //     return response('You are posting too frequently.Please take a break.:)', 422);
         // }
@@ -46,10 +67,10 @@ class ReplyController extends Controller
 
         // return back()->with('flash', 'Your reply has been left.');
 
-        return $reply = $thread->addReply([
-            'body'    => request('body'),
-            'user_id' => auth()->id(),
-        ])->load('owner');
+        // return $reply = $thread->addReply([
+        //     'body'    => request('body'),
+        //     'user_id' => auth()->id(),
+        // ])->load('owner');
     }
 
     public function update(Reply $reply, Spam $spam)
