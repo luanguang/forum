@@ -76,13 +76,10 @@ class ReplyController extends Controller
     public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
-        try {
-            $this->validate(request(), ['body' => 'required|spamfree']);
 
-            $reply->update(request(['body']));
-        } catch (\Exception $e) {
-            return response('Sorry,your reply could not be saved at this time.', 422);
-        }
+        $this->validate(request(), ['body' => 'required|spamfree']);
+
+        $reply->update(request(['body']));
     }
 
     public function destroy(Reply $reply)
