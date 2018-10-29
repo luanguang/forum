@@ -22,4 +22,15 @@ class MentionUsersTest extends TestCase
         //只有第一次能成功因为jane这个名字不是唯一的
         $this->assertCount(1, $jane->notifications);
     }
+
+    public function test_it_can_fetch_all_users_starting_with_the_given_characters()
+    {
+        create('User', ['name' => 'johndoe']);
+        create('User', ['name' => 'johndoe2']);
+        create('User', ['name' => 'janedoe']);
+
+        $result = $this->json('GET', '/api/users', ['name' => 'john']);
+
+        $this->assertCount(2, $result->json());
+    }
 }

@@ -19,6 +19,8 @@ Route::get('/profile/{user}', 'ProfileController@show')->name('profile');
 Route::get('/profile/{user}/notifications', 'UserNotificationController@index');
 Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationController@destroy');
 
+Route::get('/api/users', 'Api\UserController@index');
+
 Route::get('/threads', 'ThreadController@index');
 Route::get('/threads/create', 'ThreadController@create');
 Route::post('/threads', 'ThreadController@store');
