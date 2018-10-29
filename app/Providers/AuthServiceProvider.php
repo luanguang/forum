@@ -8,6 +8,8 @@ use App\Policies\ThreadPolicy;
 use App\Model\Thread;
 use App\Policies\ReplyPolicy;
 use App\Model\Reply;
+use App\Model\User;
+use App\Policies\UserPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Model\Thread' => 'App\Policies\ThreadPolicy',
         Thread::class => ThreadPolicy::class,
         Reply::class  => ReplyPolicy::class,
+        User::class   => UserPolicy::class,
     ];
 
     /**
