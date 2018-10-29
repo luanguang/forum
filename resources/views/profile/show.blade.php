@@ -5,9 +5,10 @@
         <div class="row">
             <div class="col-md-offset-2">
                 <div class="page-header">
-                    <h1>
+                    <avatar-form :user="{{ $profileUser }}"></avatar-form>
+                    {{--  <h1>
                         {{ $profileUser->name }}
-                        {{--  <small>注册于{{ $profileUser->created_at->diffForHumans() }}</small>  --}}
+                        <small>注册于{{ $profileUser->created_at->diffForHumans() }}</small>
                     </h1>
 
                     @can('update',$profileUser)
@@ -20,7 +21,7 @@
                         </form>
                     @endcan
                     
-                    <img src="/storage/{{ $profileUser->avatar() }}" width="200" height="200">
+                    <img src="/storage/{{ $profileUser->avatar() }}" width="200" height="200">  --}}
                 </div>
 
                 @forelse($activities as $date => $activity)
