@@ -20,6 +20,7 @@ Route::get('/profile/{user}/notifications', 'UserNotificationController@index');
 Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationController@destroy');
 
 Route::get('/api/users', 'Api\UserController@index');
+Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth');
 
 Route::get('/threads', 'ThreadController@index');
 Route::get('/threads/create', 'ThreadController@create');
