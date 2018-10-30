@@ -32,7 +32,7 @@
 
         <div class="panel-footer">
             {{--  {{ $thread->visits() }} Visits  --}}
-            {{ $thread->visits()->count() }} Visits
+            {{ $thread->visits }} Visits
         </div>
     </div>
 @empty

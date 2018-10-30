@@ -19,6 +19,7 @@ class TrendingThreadsTest extends TestCase
     public function test_it_increments_a_thread_score_each_time_it_is_read()
     {
         //测试前运行 php artisan cache:clear
+        //全部的时候不行
         $this->assertEmpty($this->trending->get());
 
         $thread = create('Thread');
