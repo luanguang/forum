@@ -43,7 +43,7 @@ class ThreadController extends Controller
             'channel_id' => 'required|exists:channels,id',
         ]);
 
-        $spam->detect($request['body']);
+        // $spam->detect($request['body']);
 
         $thread = Thread::create([
             'title'      => request('title'),
