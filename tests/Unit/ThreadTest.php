@@ -42,11 +42,11 @@ class ThreadTest extends TestCase
         $this->assertInstanceOf('App\Model\Channel', $thread->channel);
     }
 
-    public function test_a_thread_can_make_a_string_path()
+    public function test_thread_has_a_path()
     {
         $thread = create('Thread');
 
-        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->slug}", $thread->path());
     }
 
     public function test_a_thread_can_be_subscribed_to()

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Model\Activity;
+use App\Model\Thread;
 
 class CreateThreadTest extends TestCase
 {
@@ -126,5 +127,29 @@ class CreateThreadTest extends TestCase
         $this->post(route('threads'), $thread->toArray())
             ->assertRedirect('/threads')
             ->assertSessionHas('flash', 'You must first confirm your email address.');
+    }
+
+    public function test_a_thread_requires_a_unique_slug()
+    {
+        $this->signIn();
+        // $thread = create('Thread', ['title' => 'Foo title', 'slug' => 'foo-title']);
+        // $this->assertEquals($thread->fresh()->slug, 'foo-title');
+        // $this->post(route('threads'), $thread->toArray());
+        // $this->assertTrue(Thread::whereSlug('foo-title-2')->exists());
+        // $this->post(route('threads'), $thread->toArray());
+        // $this->assertTrue(Thread::whereSlug('foo-title-3')->exists());
+        create('Thread', [], 2);
+        $thread = create('Thread', ['title' => 'Foo Title']);
+        $this->assertEquals($thread->fresh()->slug, 'foo-title');
+        $thread = $this->postJson(route('threads'), $thread->toArray())->json();
+        $this->assertEquals("foo-title-{$thread['id']}", $thread['slug']);
+    }
+
+    public function test_a_thread_with_a_title_that_ends_in_a_number_should_generate_the_proper_slug()
+    {
+        $this->signIn();
+        $thread = create('Thread', ['title' => 'Something 24']);
+        $thread = $this->postJson(route('threads'), $thread->toArray())->json();
+        $this->assertEquals("something-24-{$thread['id']}", $thread['slug']);
     }
 }
