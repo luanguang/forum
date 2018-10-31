@@ -53,11 +53,18 @@ if (token) {
 // });
 window.Vue = require('vue');
 
-Vue.prototype.authorize = function (hander) {
-    let user = window.Laravel.user;
+let authorizations = require('./authorizations');
 
-    return user ? hander(user) : false;
-};
+Vue.prototype.authorize = function (...params) {
+    if (!window.Laravel.signedIn) return false;
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+    return params[0](window.Laravel.user);
+}
+
+Vue.prototype.signedIn = window.Laravel.signedIn;
 
 window.events = new Vue();
 
