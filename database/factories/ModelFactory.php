@@ -20,7 +20,13 @@ $factory->define(App\Model\User::class, function (Faker\Generator $faker) {
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('123456'),
         'remember_token' => str_random(10),
-        'confirmed'      => false,
+        'confirmed'      => true,
+    ];
+});
+
+$factory->state(App\Model\User::class, 'unconfirmed', function () {
+    return [
+        'confirmed' => false
     ];
 });
 

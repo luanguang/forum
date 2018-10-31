@@ -12,19 +12,19 @@ class CreateThreadTest extends TestCase
         $this->withExceptionHandling();
 
         $this->get('threads/create')
-            ->assertRedirect('/login');
+            ->assertRedirect(route('login'));
 
-        $this->post('/threads')
-            ->assertRedirect('/login');
+        $this->post(route('threads'))
+            ->assertRedirect(route('login'));
     }
 
-    public function test_an_authenticated_user_can_create_new_forum_threads()
+    public function test_a_user_can_create_new_forum_threads()
     {
         $this->signIn();
 
         $thread = make('Thread');
 
-        $response = $this->post('/threads', $thread->toArray());
+        $response = $this->post(route('threads'), $thread->toArray());
 
         $this->get($response->headers->get('Location'))->assertSee($thread->title)->assertSee($thread->body);
     }
@@ -91,7 +91,7 @@ class CreateThreadTest extends TestCase
 
         $response = $this->delete($thread->path());
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect(route('login'));
     }
 
     public function test_unauthorized_users_may_not_delete_threads()
@@ -100,7 +100,7 @@ class CreateThreadTest extends TestCase
 
         $thread = create('Thread');
 
-        $this->delete($thread->path())->assertRedirect('/login');
+        $this->delete($thread->path())->assertRedirect(route('login'));
 
         $this->signIn();
         $this->delete($thread->path())->assertStatus(403);
@@ -112,12 +112,18 @@ class CreateThreadTest extends TestCase
 
         $thread = make('Thread', $overrides);
 
-        return $this->post('/threads', $thread->toArray());
+        return $this->post(route('threads'), $thread->toArray());
     }
 
-    public function test_authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
+    public function test_new_users_must_first_confirm_their_email_address_before_creating_threads()
     {
-        $this->publishThread()
+        $user = factory('App\Model\User')->states('unconfirmed')->create();
+
+        $this->signIn($user);
+
+        $thread = make('Thread');
+
+        $this->post(route('threads'), $thread->toArray())
             ->assertRedirect('/threads')
             ->assertSessionHas('flash', 'You must first confirm your email address.');
     }
