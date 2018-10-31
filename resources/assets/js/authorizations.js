@@ -6,5 +6,9 @@ module.exports = {
     // }
     owns (model, prop = 'user_id') {
         return model[prop] == user.id;
+    },
+
+    isAdmin() {
+        return ['admin'].includes(user.name);
     }
 }

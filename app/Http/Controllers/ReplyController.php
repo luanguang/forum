@@ -25,22 +25,26 @@ class ReplyController extends Controller
 
     public function store($channel_id, Thread $thread, CreatePostRequest $form)
     {
+        if ($thread->locked) {
+            return response('Thread is locked', 422);
+        }
+
         $reply = $thread->addReply([
             'body'    => request('body'),
             'user_id' => auth()->id(),
         ]);
 
-        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matched);
+        // preg_match_all('/\@([^\s\.]+)/', $reply->body, $matched);
 
-        $names = $matched[1];
+        // $names = $matched[1];
 
-        foreach ($names as $name) {
-            $user = User::whereName($name)->first();
+        // foreach ($names as $name) {
+        //     $user = User::whereName($name)->first();
 
-            if ($user) {
-                $user->notify(new YouWereMentioned($reply));
-            }
-        }
+        //     if ($user) {
+        //         $user->notify(new YouWereMentioned($reply));
+        //     }
+        // }
 
         return $reply->load('owner');
 
