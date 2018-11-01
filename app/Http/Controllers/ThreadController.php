@@ -44,6 +44,11 @@ class ThreadController extends Controller
         ]);
 
         // $spam->detect($request['body']);
+        // $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret'   => config('services.recaptcha.secret'),
+        //     'response' => $request->input('g-recaptcha-response'),
+        //     'remoteip' => $_SERVER['REMOTE_ADDR']
+        // ]);
 
         $thread = Thread::create([
             'title'      => request('title'),
