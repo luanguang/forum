@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="panel panel-default">
+                    {{--  <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="level">
                                 <img src="/storage/{{ $thread->creator->avatar_path }}" alt="{{ $thread->creator->name }}" width="25" height="25" class="mr-1">
@@ -31,8 +31,8 @@
                         <div class="panel-body">
                             {{ $thread->body }}
                         </div>
-                    </div>
-
+                    </div>  --}}
+                    @include('threads._topic')
             
                     <replies @added="repliesCount++" @removed="repliesCount--"></replies>
 
