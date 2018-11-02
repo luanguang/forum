@@ -9,10 +9,11 @@ use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Support\Facades\Redis;
 use App\Visits;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Searchable;
 
     protected $guarded = [];
     protected $with = ['creator', 'channel'];
@@ -202,4 +203,9 @@ class Thread extends Model
     // {
     //     $this->update(['locked' => true]);
     // }
+
+    public function toSearchableArray()
+    {
+        return $this->toArray() + ['path' => $this->path()];
+    }
 }
