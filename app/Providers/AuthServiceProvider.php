@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //用户授权
         Gate::before(function ($user) {
-            if ($user->name === 'admin') {
+            if ($user->name === '曹婉婉') {
                 return true;
             }
         });

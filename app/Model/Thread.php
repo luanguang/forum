@@ -34,14 +34,9 @@ class Thread extends Model
         });
     }
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
     public function path()
     {
-        return "/threads/{$this->channel->slug}/{$this->slug}";
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
     public function replies()
