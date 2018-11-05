@@ -35,7 +35,6 @@ Route::get('/threads/{channel}', 'ThreadController@index');
 
 Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
-// Route::resource('threads', 'ThreadController');
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
@@ -51,6 +50,5 @@ Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionCont
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')->middleware('auth');
 
 Auth::routes();
-// Route::view('scan', 'scan');
 
 Route::get('/home', 'HomeController@index')->name('home');

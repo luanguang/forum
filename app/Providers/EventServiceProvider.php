@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Auth\Events\Registered;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -14,20 +13,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        // 'App\Events\Event' => [
-        //     'App\Listeners\EventListener',
-        // ],
-        // 'App\Events\ThreadHasNewReply' => [
-        //     'App\Listeners\NotifyThreadSubscribers',
-        // ],
         'App\Events\ThreadReceivedNewReply' => [
             'App\Listeners\NotifyMentionedUsers',
             'App\Listeners\NotifySubscribers',
         ],
-
-        // Registered::class => [
-        //     'App\Listeners\SendEmailConfirmationRequest',
-        // ],
     ];
 
     /**

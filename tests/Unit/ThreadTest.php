@@ -53,11 +53,8 @@ class ThreadTest extends TestCase
     {
         $thread = create('Thread');
 
-        // $this->signIn();
-
         $thread->subscribe($user_id = 1);
 
-        // $thread->subscriptions()->where('user_id', auth()->id())->get();
         $this->assertEquals(1, $thread->subscriptions()->where('user_id', $user_id)->count());
     }
 
@@ -111,29 +108,6 @@ class ThreadTest extends TestCase
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
     }
-
-    // public function test_a_thread_records_each_visit()
-    // {
-    //     $thread = make('Thread', ['id' => 1]);
-
-    //     $thread->visits()->reset();
-    //     $this->assertSame(0, $thread->visits()->count());
-
-    //     $thread->visits()->record();
-    //     $this->assertEquals(1, $thread->visits()->count());
-
-    //     // $thread->recordVisit();
-    //     // $this->assertEquals(2, $thread->visits());
-    // }
-
-    // public function test_a_thread_can_be_locked()
-    // {
-    //     $this->assertFalse($this->thread->locked);
-
-    //     $this->thread->lock();
-
-    //     $this->assertTrue($this->thread->locked);
-    // }
 
     public function test_a_thread_body_is_sanitized_automatically()
     {

@@ -12,11 +12,7 @@
                     <favorite :reply="reply"></favorite>
                 </div>
 
-                <!--@if(Auth::check())-->
-                <!--<div>-->
-                    <!--<favorite :reply="{{ $reply }}"></favorite>-->
-                <!--</div>-->
-                <!--@endif-->
+
             </div>
         </div>
 
@@ -25,7 +21,6 @@
                 <form @submit.prevent="update">
                     <div class="form-group">
                         <wysiwyg v-model="body"></wysiwyg>
-                        <!-- <textarea class="form-control" v-model="body" required></textarea> -->
                     </div>
 
                     <button class="btn btn-xs btn-primary">Update</button>

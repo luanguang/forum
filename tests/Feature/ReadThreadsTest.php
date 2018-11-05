@@ -23,12 +23,6 @@ class ReadThreadsTest extends TestCase
         $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
-    // public function test_a_user_can_read_replies_that_are_associated_with_a_thread()
-    // {
-    //     $reply = create('Reply', ['thread_id' => $this->thread->id]);
-    //     $this->get($this->thread->path())->assertSee($reply->body);
-    // }
-
     public function test_a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create('Channel');
@@ -65,7 +59,6 @@ class ReadThreadsTest extends TestCase
         $response = $this->getJson('threads?popularity=1')->json();
 
         $this->get('threads?popularity=1')->assertStatus(200);
-        // $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
     }
 
     public function test_a_user_can_request_all_replies_for_a_given_thread()
@@ -75,7 +68,6 @@ class ReadThreadsTest extends TestCase
 
         $response = $this->getJson($thread->path() . '/replies')->json();
 
-        // $this->assertCount(20, $response['data']);
         $this->assertEquals(40, $response['total']); //数量不管
     }
 

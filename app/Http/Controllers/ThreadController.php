@@ -43,19 +43,11 @@ class ThreadController extends Controller
             'channel_id' => 'required|exists:channels,id',
         ]);
 
-        // $spam->detect($request['body']);
-        // $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
-        //     'secret'   => config('services.recaptcha.secret'),
-        //     'response' => $request->input('g-recaptcha-response'),
-        //     'remoteip' => $_SERVER['REMOTE_ADDR']
-        // ]);
-
         $thread = Thread::create([
             'title'      => request('title'),
             'body'       => request('body'),
             'user_id'    => auth()->id(),
             'channel_id' => request('channel_id'),
-            // 'slug'       => request('title')
         ]);
 
         if (request()->wantsJson()) {
@@ -78,11 +70,6 @@ class ThreadController extends Controller
         return view('threads.show', compact('thread'));
     }
 
-    public function edit(Thread $thread)
-    {
-        //
-    }
-
     public function update($channel_id, Thread $thread)
     {
         $this->authorize('update', $thread);
@@ -93,16 +80,10 @@ class ThreadController extends Controller
         ]));
 
         return $thread;
-        // if (request()->has('locked')) {
-        //     if (!auth()->user()->isAdmin()) {
-        //         return response('', 403);
-        //     }
-        // }
     }
 
     public function destroy($channel, Thread $thread)
     {
-        // $thread->replies()->delete();
         $this->authorize('update', $thread);
 
         $thread->delete();

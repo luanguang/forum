@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Model\Activity;
-use App\Model\Thread;
 
 class CreateThreadTest extends TestCase
 {
@@ -60,28 +59,12 @@ class CreateThreadTest extends TestCase
 
         $thread = create('Thread', ['user_id' => auth()->id()]);
         $reply = create('Reply', ['thread_id' => $thread->id]);
-        // $this->assertDatabaseHas('threads', ['id' => $thread->id]);
+
         $response = $this->json('DELETE', $thread->path());
 
         $response->assertStatus(204);
 
-        //assertDatabaseMissing不存在
-        // $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
-        // $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
-
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id'   => $thread->id,
-        //     'subject_type' => get_class($thread),
-        // ]);
-
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id'   => $reply->id,
-        //     'subject_type' => get_class($reply)
-        // ]);
-
         $this->assertEquals(1, Activity::count());
-
-        // $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
     }
 
     public function test_guests_cannot_delete_threads()
@@ -132,12 +115,6 @@ class CreateThreadTest extends TestCase
     public function test_a_thread_requires_a_unique_slug()
     {
         $this->signIn();
-        // $thread = create('Thread', ['title' => 'Foo title', 'slug' => 'foo-title']);
-        // $this->assertEquals($thread->fresh()->slug, 'foo-title');
-        // $this->post(route('threads'), $thread->toArray());
-        // $this->assertTrue(Thread::whereSlug('foo-title-2')->exists());
-        // $this->post(route('threads'), $thread->toArray());
-        // $this->assertTrue(Thread::whereSlug('foo-title-3')->exists());
         create('Thread', [], 2);
         $thread = create('Thread', ['title' => 'Foo Title']);
         $this->assertEquals($thread->fresh()->slug, 'foo-title');

@@ -11,8 +11,6 @@ class Spam
 
     public function detect($body)
     {
-        // $this->detectInvalidKeywords($body);
-        // $this->detectKeyHeldDown($body);
         foreach ($this->inspections as $inspection) {
             app($inspection)->detect($body);
         }

@@ -3,7 +3,6 @@
         <div v-if="signedIn">
             <div class="form-group">
                 <wysiwyg name="body" v-model="body" placeholder="Have something to say?" :shouldClear="completed"></wysiwyg>
-                <!-- <textarea name="body" id="body" rows="5" class="form-control" placehoder="说点什么吧..." required v-model="body"></textarea> -->
             </div>
 
             <button type="submit" class="btn btn-default" @click="addReply">
@@ -23,7 +22,6 @@
     import 'at.js';
 
     export default {
-        // props: ['endpoint'],
 
         data() {
             return {

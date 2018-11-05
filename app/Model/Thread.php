@@ -4,11 +4,7 @@ namespace App\Model;
 
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\ThreadWasUpdated;
-use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
-use Illuminate\Support\Facades\Redis;
-use App\Visits;
 use Laravel\Scout\Searchable;
 
 class Thread extends Model
@@ -69,26 +65,6 @@ class Thread extends Model
 
         event(new ThreadReceivedNewReply($reply));
 
-        // event(new ThreadHasNewReply($this, $reply));
-
-        // $this->subscriptions->where('user_id', '!=', $reply->user_id)->each->notify($reply);
-
-        // $this->subscriptions->filter(function ($sub) use ($reply) {
-        //     return $sub->user_id != $reply->user_id;
-        // })->each->notify($reply);
-
-        // $this->subscriptions->filter(function ($sub) use ($reply) {
-        //     return $sub->user_id != $reply->user_id;
-        // })->each(function ($sub) use ($reply) {
-        //     $sub->user->notify(new ThreadWasUpdated($this, $reply));
-        // });
-
-        // foreach ($this->subscriptions as $subscription) {
-        //     if ($subscription->user_id != $reply->user_id) {
-        //         $subscription->user->notify(new ThreadWasUpdated($this, $reply));
-        //     }
-        // }
-
         return $reply;
     }
 
@@ -137,42 +113,8 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
-    // public function visits()
-    // {
-    //     return new Visits($this);
-    // }
-
-    // public function recordVisit()
-    // {
-    //     Redis::incr($this->visitsCacheKey());
-
-    //     return $this;
-    // }
-
-    // public function visits()
-    // {
-    //     return Redis::get($this->visitsCacheKey()) ?: 0;
-    // }
-
-    // public function resetVisits()
-    // {
-    //     Redis::del($this->visitsCacheKey());
-
-    //     return $this;
-    // }
-
-    // public function visitsCacheKey()
-    // {
-    //     return "threads.{$this->id}.visits";
-    // }
-
     public function setSlugAttribute($value)
     {
-        // if (static::whereSlug($slug = str_slug($value))->exists()) {
-        //     $slug = $this->incrementSlug($slug);
-        // }
-
-        // $this->attributes['slug'] = $slug;
         $slug = str_slug($value);
 
         if (static::whereSlug($slug)->exists()) {
@@ -199,11 +141,6 @@ class Thread extends Model
     {
         $this->update(['best_reply_id' => $reply->id]);
     }
-
-    // public function lock()
-    // {
-    //     $this->update(['locked' => true]);
-    // }
 
     public function toSearchableArray()
     {

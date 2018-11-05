@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateThreadsTest extends TestCase
 {
-    // use RefreshDatabase;
-
     public function setUp()
     {
         parent::setUp();
