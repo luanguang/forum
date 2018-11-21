@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('header')
+{{-- @section('header')
     <script src="https://www.google.com/recaptcha/api.js"></script>
-@endsection
+@endsection --}}
 
 @section('content')
     <div class="container">
@@ -41,6 +41,13 @@
                             {{--  <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="6LeOE3gUAAAAACSDqdtVu2SL3j0sU4WzMfj1nPMS"></div>
                             </div>  --}}
+
+                            <div class="form-group code">
+                                <label>验证码</label>
+                                <input class="tt-text" name="captcha">
+                                <img src="{{captcha_src()}}" onclick="this.src='/captcha/default?'+Math.random()" id="captchaCode" alt="" class="captcha">
+                                <a rel="nofollow" href="javascript:;" onclick="document.getElementById('captchaCode').src='captcha/default?'+Math.random()" class="reflash"></a>
+                            </div>
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Publish</button>

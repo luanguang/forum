@@ -41,6 +41,7 @@ class ThreadController extends Controller
             'title'      => 'required|spamfree',
             'body'       => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id',
+            'captcha'    => 'required|captcha',
         ]);
 
         $thread = Thread::create([

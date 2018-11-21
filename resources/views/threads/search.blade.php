@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -67,4 +67,4 @@
             </ais-index>
         </div>
     </div>
-@endsection
+@endsection --}}

@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="panel panel-default">
+                {{-- <div class="panel panel-default">
                     <div class="panel-heading">
                         Search
                     </div>
@@ -26,7 +26,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> --}}
                 @if (count($trending))
                     <div class="panel panel-default">
                         <div class="panel-heading">
