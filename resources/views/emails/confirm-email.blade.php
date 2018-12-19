@@ -1,5 +1,5 @@
 @component('mail::message')
-# Introduction
+# ^_^
 
 点击确认，让我知道你不是一个僵尸号！
 
