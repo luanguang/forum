@@ -40,7 +40,7 @@
                     this.title = this.form.title;
                     this.body = this.form.body;
 
-                    flash('Your thread has been updated.');
+                    flash('你更新了你的文章.');
                 });
             },
 

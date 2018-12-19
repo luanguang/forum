@@ -30,7 +30,7 @@
                 @if (count($trending))
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Trending Threads
+                            热门
                         </div>
                         <div class="panel-body">
                             <ul class="list-group">

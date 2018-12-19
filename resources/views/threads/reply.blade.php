@@ -26,8 +26,8 @@
                     <textarea class="form-control" v-model="body"></textarea>
                 </div>
 
-                <button class="btn btn-xs btn-primary" @click="update">Update</button>
-                <button class="btn btn-xs btn-link" @click="editing = false">Cancel</button>
+                <button class="btn btn-xs btn-primary" @click="update">{{ trans('message.update') }}</button>
+                <button class="btn btn-xs btn-link" @click="editing = false">{{ trans('message.cancel') }}</button>
             </div>
 
             <div v-else v-text="body"> </div>
@@ -39,8 +39,8 @@
 
         @can('update', $reply)
             <div class="panel-footer level">
-                <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
-                <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
+                <button class="btn btn-xs mr-1" @click="editing = true">{{ trans('message.edit') }}</button>
+                <button class="btn btn-danger btn-xs mr-1" @click="destroy">{{ trans('message.delete') }}</button>
             </div>
         @endcan
     </div>

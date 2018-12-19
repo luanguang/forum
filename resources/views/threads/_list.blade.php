@@ -16,12 +16,12 @@
                     </h4>
 
                     <h5>
-                        Posted By:<a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a>
+                        作者:<a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a>
                     </h5>
                 </div>
 
                 <a href="{{ $thread->path() }}">
-                    {{ $thread->replies_count }} {{ str_plural('reply',$thread->replies_count) }}
+                    {{ $thread->replies_count }} 回复
                 </a>
             </div>
         </div>
@@ -32,7 +32,7 @@
 
         <div class="panel-footer">
             {{--  {{ $thread->visits() }} Visits  --}}
-            {{ $thread->visits }} Visits
+            {{ $thread->visits }} {{ trans('message.visit') }}
         </div>
     </div>
 @empty

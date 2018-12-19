@@ -15,15 +15,15 @@
 
     <div class="panel-footer">
         <div class="level">
-            <button class="btn btn-primary btn-xs level-item" @click="update">Update</button>
-            <button class="btn btn-xs level-item" @click="resetForm">Cancel</button>
+            <button class="btn btn-primary btn-xs level-item" @click="update">更新</button>
+            <button class="btn btn-xs level-item" @click="resetForm">取消</button>
 
             @can('update',$thread)
                 <form action="{{ $thread->path() }}" method="POST" class="ml-a">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
 
-                    <button type="submit" class="btn btn-link">Delete Thread</button>
+                    <button type="submit" class="btn btn-link">删除文章</button>
                 </form>
             @endcan
         </div>
@@ -46,6 +46,6 @@
     </div>
 
     <div class="panel-footer" v-if="authorize('owns', thread)">
-        <button class="btn btn-xs" @click="editing = true">Edit</button>
+        <button class="btn btn-xs" @click="editing = true">{{ trans('message.edit') }}</button>
     </div>
 </div>

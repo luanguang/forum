@@ -1,10 +1,10 @@
 @component('mail::message')
 # Introduction
 
-We just need you to confirm your email address to prove that you are a human.
+点击确认，让我知道你不是一个僵尸号！
 
 @component('mail::button', ['url' => url('/register/confirm?token=' . $user->confirmation_token)])
-Confirm Email
+确认
 @endcomponent
 
 Thanks,<br>

@@ -5,7 +5,7 @@
                 <h5 class="flex">
                     <a :href="'/profiles/'+reply.owner.name"
                         v-text="reply.owner.name">
-                    </a>said <span v-text="ago"></span>
+                    </a>发表 <span v-text="ago"></span>
                 </h5>
 
                 <div v-if="signedIn">
@@ -23,8 +23,8 @@
                         <wysiwyg v-model="body"></wysiwyg>
                     </div>
 
-                    <button class="btn btn-xs btn-primary">Update</button>
-                    <button class="btn btn-xs btn-link" @click="cancelReply" type="button">Cancel</button>
+                    <button class="btn btn-xs btn-primary">更新</button>
+                    <button class="btn btn-xs btn-link" @click="cancelReply" type="button">取消</button>
                 </form>
             </div>
 
@@ -33,11 +33,11 @@
 
             <div class="panel-footer level" v-if="authorize('owns', reply) || authorize('owns', reply.thread)">
                 <div v-if="authorize('owns', reply)">
-                    <button class="btn btn-xs mr-1" @click="editReply">Edit</button>
-                    <button class="btn btn-xs btn-danger mr-1" @click="destroy">Delete</button>
+                    <button class="btn btn-xs mr-1" @click="editReply">编辑</button>
+                    <button class="btn btn-xs btn-danger mr-1" @click="destroy">删除</button>
                 </div>
 
-                <button class="btn btn-xs btn-default ml-a" @click="markBestReply" v-if="authorize('owns', reply.thread)">Best Reply</button>
+                <button class="btn btn-xs btn-default ml-a" @click="markBestReply" v-if="authorize('owns', reply.thread)">神回复</button>
             </div>
     </div>
 </template>
