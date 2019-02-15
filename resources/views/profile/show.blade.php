@@ -7,6 +7,9 @@
                 <div class="page-header">
                     <avatar-form :user="{{ $profileUser }}"></avatar-form>
                 </div>
+                <span id="signIn">
+                    <button onclick="signIn()">签到</button>
+                </span>
 
                 @forelse($activities as $date => $activity)
                     <h3 class="page-header">{{ $date }}</h3>
@@ -24,5 +27,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function signIn()
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let info = document.getElementById('signIn');
+                    info.innerHTML = '签到成功';
+                }
+            }
+            xhr.open('POST', '/profile/' + '{{ $profileUser->name }}' + '/signIn', true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+            xhr.send();
+        }
+
+    </script>
 
 @endsection

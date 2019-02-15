@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect('threads');
 });
 
+Route::post('/profile/{user}/signIn', 'ProfileController@signIn');
+
 Route::get('/profile/{user}', 'ProfileController@show')->name('profile');
 Route::get('/profile/{user}/notifications', 'UserNotificationController@index');
 Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationController@destroy');
